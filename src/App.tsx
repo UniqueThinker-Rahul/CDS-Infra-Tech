@@ -62,7 +62,7 @@ export default function App() {
       className="relative h-screen w-full bg-[#0a0a16] text-white overflow-hidden bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
-      <div className="absolute inset-0 bg-black/50 z-0"></div>
+     <div className="absolute inset-0 bg-black/70 z-0"></div>
 
       {/* GLOBAL LOGO - Added onClick to redirect to Home */}
       <div 
