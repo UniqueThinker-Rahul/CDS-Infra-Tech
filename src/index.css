@@ -5,6 +5,47 @@
   --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
 }
 
-html {
+/* 1. Global Reset */
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  /* Prevents the 'bounce' effect on mobile/trackpads */
+  overscroll-behavior-y: none; 
+}
+
+/* 2. Scroll Snapping Setup */
+/* Apply these classes to your main container in App.tsx */
+.snap-container {
+  height: 100vh;
+  overflow-y: auto;
+  scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
+  /* Hide scrollbar for Chrome, Safari and Opera */
+  &::-webkit-scrollbar {
+    display: none;
+  }
+  /* Hide scrollbar for IE, Edge and Firefox */
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* 3. Snap Sections */
+/* Apply this to each section (Home, Services, etc.) */
+.snap-section {
+  height: 100vh;
+  width: 100%;
+  scroll-snap-align: start;
+  scroll-snap-stop: always;
+  position: relative;
+}
+
+/* 4. Smooth Fade-in for Content */
+.content-fade {
+  animation: fadeIn 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
 }
