@@ -6,12 +6,23 @@ import backgroundImage from '/background.jpg';
 
 const pageVariants = {
   initial: { opacity: 0 },
-  animate: { opacity: 1, transition: { duration: 1 } },
+  animate: { opacity: 1, transition: { duration: 1, staggerChildren: 0.2 } },
   exit: { opacity: 0 }
+};
+
+const itemVariants = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0, transition: { duration: 0.8, ease: [0.16, 1, 0.3, 1] } }
 };
 
 export default function HomeSection({ setActiveTab }) {
   const [showVideo, setShowVideo] = useState(false);
+
+  const handleWhatsApp = () => {
+    const phoneNumber = "918955957893";
+    const message = encodeURIComponent("Hello CDS Infra Tech, I would like to inquire about your construction solutions.");
+    window.open(`https://wa.me/${phoneNumber}?text=${message}`, '_blank');
+  };
 
   const metrics = [
     { value: '50+', label: 'Websites Built', icon: Globe },
@@ -29,63 +40,69 @@ export default function HomeSection({ setActiveTab }) {
       className="relative flex-1 flex flex-col items-center w-full min-h-screen overflow-hidden bg-cover bg-center bg-no-repeat"
       style={{ backgroundImage: `url(${backgroundImage})` }}
     >
-      {/* Increased overlay opacity for better text contrast */}
-      <div className="absolute inset-0 bg-black/50 z-0"></div>
+      {/* Dynamic Overlay for Depth */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/40 to-black/80 z-0"></div>
 
-      {/* Header removed to clean up space for the global logo in App.tsx */}
-
-      {/* Main Content */}
-      <div className="relative flex-1 flex flex-col items-center justify-center text-center w-full max-w-5xl px-6 z-10">
+      {/* Main Content Container */}
+      <div className="relative flex-1 flex flex-col items-center justify-center text-center w-full max-w-5xl px-6 z-10 -mt-12">
         
-        {/* Increased text size and added shadow for maximum visibility */}
-        <h1 className="text-4xl md:text-[56px] text-white leading-[1.1] mb-12 tracking-tight drop-shadow-[0_4px_4px_rgba(0,0,0,0.5)]">
-          <span className="opacity-90 font-light block mb-2">Building Digital Foundations for</span>
-          <span className="font-extrabold tracking-wide">CONSTRUCTION SUCCESS</span>
-        </h1>
+        {/* Title Section with Staggered Animation */}
+        <motion.div variants={itemVariants} className="space-y-4">
+            <h1 className="text-4xl md:text-[64px] text-white leading-[1.05] mb-10 tracking-tight font-black">
+                <span className="opacity-70 font-light block text-2xl md:text-3xl tracking-[0.2em] uppercase mb-4">
+                    Building Digital Foundations for
+                </span>
+                <span className="drop-shadow-[0_10px_30px_rgba(0,0,0,0.5)]">
+                    CONSTRUCTION <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8b5cf6] to-[#ec4899]">SUCCESS</span>
+                </span>
+            </h1>
+        </motion.div>
         
-        <div className="flex flex-col sm:flex-row gap-6 items-center">
+        {/* Call to Action Buttons */}
+        <motion.div variants={itemVariants} className="flex flex-col sm:flex-row gap-6 items-center">
           <button 
             onClick={() => setActiveTab('Services')}
-            className="px-12 py-4 rounded-full bg-gradient-to-r from-[#8b5cf6] to-[#ec4899] text-white font-bold text-base hover:brightness-110 transition-all shadow-2xl shadow-pink-500/30 active:scale-95"
+            className="group relative px-12 py-4 rounded-full bg-gradient-to-r from-[#8b5cf6] to-[#ec4899] text-white font-bold text-sm tracking-widest uppercase hover:scale-105 transition-all shadow-[0_20px_40px_rgba(236,72,153,0.3)] active:scale-95 overflow-hidden"
           >
-            Explore Our Solutions
+            <span className="relative z-10">Explore Our Solutions</span>
+            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300"></div>
           </button>
           
           <button 
             onClick={() => setShowVideo(true)}
-            className="px-12 py-4 rounded-full border border-white/40 bg-white/10 backdrop-blur-md text-white font-bold text-base flex items-center gap-3 hover:bg-white/20 transition-all active:scale-95 shadow-xl"
+            className="px-10 py-4 rounded-full border border-white/20 bg-white/5 backdrop-blur-md text-white font-bold text-sm tracking-widest uppercase flex items-center gap-3 hover:bg-white/10 transition-all active:scale-95 shadow-xl"
           >
-            <div className="w-8 h-8 rounded-full bg-white/20 flex items-center justify-center">
-              <Play className="w-4 h-4 fill-white" />
+            <div className="w-8 h-8 rounded-full bg-pink-500/20 flex items-center justify-center border border-pink-500/30">
+              <Play className="w-3 h-3 fill-pink-500 text-pink-500" />
             </div>
             Watch Overview
           </button>
-        </div>
+        </motion.div>
 
-        {/* Client Logos - Adjusted visibility */}
-        <div className="mt-24 w-full">
-          <p className="text-white/60 text-[10px] uppercase tracking-[0.5em] font-bold mb-10">Trusted by Industry Leaders</p>
-          <div className="flex flex-wrap justify-center items-center gap-x-14 gap-y-8 opacity-80 transition-all duration-700">
+        {/* Industry Trust Section */}
+        <motion.div variants={itemVariants} className="mt-28 w-full">
+          <p className="text-white/40 text-[10px] uppercase tracking-[0.6em] font-bold mb-10">Trusted by Industry Leaders</p>
+          <div className="flex flex-wrap justify-center items-center gap-x-16 gap-y-8 opacity-60 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-700">
             {['BuildCorp', 'Skyline', 'UrbanTech', 'TerraForm', 'Apex'].map((brand) => (
               <div key={brand} className="flex items-center gap-2 group cursor-default">
-                <ShieldCheck className="w-5 h-5 text-white/70 group-hover:text-white transition-colors" />
-                <span className="text-xl font-bold tracking-tighter text-white group-hover:scale-105 transition-transform">{brand}</span>
+                <ShieldCheck className="w-4 h-4 text-white/50 group-hover:text-pink-500 transition-colors" />
+                <span className="text-lg font-black tracking-tighter text-white/80 group-hover:text-white transition-colors">{brand}</span>
               </div>
             ))}
           </div>
-        </div>
+        </motion.div>
       </div>
 
-      {/* Sidebar Metrics - Enhanced Glassmorphism */}
-      <div className="hidden lg:block absolute right-12 top-1/2 -translate-y-1/2 z-20">
-        <div className="bg-black/20 backdrop-blur-3.5xl rounded-[40px] py-12 px-6 flex flex-col gap-10 border border-white/90 shadow-2xl">
+      {/* Sidebar Metrics - Refined High-Transparency Glass */}
+      <div className="hidden xl:block absolute right-10 top-1/2 -translate-y-1/2 z-20">
+        <div className="bg-black/40 backdrop-blur-[40px] rounded-[48px] py-12 px-6 flex flex-col gap-12 border border-white/10 shadow-2xl">
           {metrics.map((metric, idx) => (
-            <div key={idx} className="flex flex-col items-center group">
-              <div className="mb-3 p-2 rounded-xl bg-white/10 flex items-center justify-center group-hover:bg-[#ec4899]/30 transition-all">
-                <metric.icon className="w-5 h-5 text-white group-hover:scale-110 transition-transform" />
+            <div key={idx} className="flex flex-col items-center group cursor-default">
+              <div className="mb-3 p-2.5 rounded-2xl bg-white/5 border border-white/5 flex items-center justify-center group-hover:bg-[#ec4899]/20 group-hover:border-[#ec4899]/30 transition-all duration-500">
+                <metric.icon className="w-5 h-5 text-white/70 group-hover:text-white" />
               </div>
-              <span className="text-2xl font-black text-white leading-none mb-1">{metric.value}</span>
-              <span className="text-white/50 font-bold text-[7px] tracking-widest text-center leading-tight uppercase">
+              <span className="text-2xl font-black text-white leading-none mb-1 tracking-tighter">{metric.value}</span>
+              <span className="text-[7px] text-white/30 font-black tracking-[0.2em] text-center leading-tight uppercase group-hover:text-white/60 transition-colors">
                 {metric.label.split(' ').join('\n')}
               </span>
             </div>
@@ -93,22 +110,41 @@ export default function HomeSection({ setActiveTab }) {
         </div>
       </div>
 
-      {/* Vertical Label */}
-      <div className="hidden md:block fixed right-0 top-1/2 -translate-y-1/2 translate-x-[42px] rotate-90 z-30">
-        <div className="bg-white/10 backdrop-blur-lg border border-white/10 text-white/60 px-8 py-3 rounded-t-2xl text-[10px] font-bold tracking-[0.4em] uppercase">
-          Our Journey
-        </div>
-      </div>
-
-      {/* WhatsApp Chat Button */}
+      {/* WhatsApp Floating Component */}
       <div className="fixed bottom-10 right-10 z-50">
-        <button className="flex items-center gap-4 bg-white/10 backdrop-blur-2xl border border-white/20 text-white pl-2 pr-8 py-2.5 rounded-full font-bold shadow-2xl hover:bg-white/20 transition-all hover:-translate-y-1">
-          <div className="w-12 h-12 bg-[#22c55e] rounded-full flex items-center justify-center shadow-lg shadow-green-500/20">
-              <FaWhatsapp className="w-7 h-7 text-white" />
+        <button 
+          onClick={handleWhatsApp}
+          className="group flex items-center gap-4 bg-white/10 backdrop-blur-2xl border border-white/10 text-white pl-2 pr-8 py-2.5 rounded-full font-bold shadow-[0_20px_50px_rgba(0,0,0,0.3)] hover:bg-white/15 transition-all hover:-translate-y-1 active:scale-95"
+        >
+          <div className="relative w-12 h-12 bg-[#22c55e] rounded-full flex items-center justify-center shadow-lg group-hover:shadow-[#22c55e]/40 transition-all">
+              <div className="absolute inset-0 rounded-full bg-[#22c55e] animate-ping opacity-20"></div>
+              <FaWhatsapp className="w-7 h-7 text-white relative z-10" />
           </div>
-          <span className="text-sm uppercase tracking-widest">Let's Talk</span>
+          <div className="flex flex-col items-start">
+            <span className="text-[10px] text-white/50 uppercase tracking-widest leading-none mb-1 font-medium">Have a project?</span>
+            <span className="text-sm uppercase tracking-widest font-black">Let's Talk</span>
+          </div>
         </button>
       </div>
+
+      {/* Simple Video Modal */}
+      <AnimatePresence>
+        {showVideo && (
+            <motion.div 
+                initial={{ opacity: 0 }} 
+                animate={{ opacity: 1 }} 
+                exit={{ opacity: 0 }}
+                className="fixed inset-0 z-[200] bg-black/95 backdrop-blur-xl flex items-center justify-center p-6"
+            >
+                <button onClick={() => setShowVideo(false)} className="absolute top-10 right-10 text-white/50 hover:text-white transition-colors">
+                    <X className="w-10 h-10" />
+                </button>
+                <div className="w-full max-w-4xl aspect-video bg-white/5 rounded-3xl border border-white/10 flex items-center justify-center">
+                    <p className="text-white/40 font-black tracking-widest uppercase italic">Video Stream Placeholder</p>
+                </div>
+            </motion.div>
+        )}
+      </AnimatePresence>
     </motion.div>
   );
 }
